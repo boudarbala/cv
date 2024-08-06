@@ -21,7 +21,9 @@ jobs:
 
     steps:
     - name: install oatpp
-      run: ./utility/install-oatpp-modules.sh 
+      run: ${{ github.workspace }}/utility/install-oatpp-modules.sh
+
+      
     - uses: actions/checkout@v4
 
     - name: Configure CMake
