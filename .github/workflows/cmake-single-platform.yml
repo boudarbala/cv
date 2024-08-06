@@ -21,7 +21,7 @@ jobs:
 
     steps:
     - name: install oatpp
-      run: sudo bash ./utility/install-oatpp-modules.sh 
+      run: ./utility/install-oatpp-modules.sh 
     - uses: actions/checkout@v4
 
     - name: Configure CMake
