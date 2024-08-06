@@ -21,7 +21,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Install oatpp
-      run: ${{ github.workspace }}/utility/install-oatpp-modules.sh
+      run: sudo bash ${{ github.workspace }}/utility/install-oatpp-modules.sh
 
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
