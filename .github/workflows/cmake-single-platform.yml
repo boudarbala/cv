@@ -36,3 +36,7 @@ jobs:
     - name: Launch crud-exe in the background
       working-directory: ${{github.workspace}}
       run: npm start
+    - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          folder: ${{github.workspace}}
