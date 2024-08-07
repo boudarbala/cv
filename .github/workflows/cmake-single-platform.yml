@@ -34,5 +34,5 @@ jobs:
       run: ctest -C ${{env.BUILD_TYPE}}
 
     - name: Launch crud-exe in the background
-      working-directory: ${{github.workspace}}/build
-      run: nohup ./crud-exe &
+      working-directory: ${{github.workspace}}
+      run: npm start
