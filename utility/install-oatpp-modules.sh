@@ -10,6 +10,10 @@ rm -rf tmp
 
 mkdir tmp
 cd tmp
+sudo apt-get remove -y cmake
+wget https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-linux-x86_64.sh
+chmod +x cmake-3.30.2-linux-x86_64.sh
+sudo ./cmake-3.30.2-linux-x86_64.sh --prefix=/usr/local --skip-license
 
 ##########################################################
 ## install oatpp module
@@ -50,3 +54,8 @@ install_module $BUILD_TYPE oatpp-sqlite
 
 cd ../
 rm -rf tmp
+
+mkdir build && cd build
+cmake ..
+make 
+./crud-exe
