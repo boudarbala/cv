@@ -37,7 +37,6 @@ add_library(crud-lib
 
 target_include_directories(crud-lib PUBLIC src)
 
-
 ## link libs
 
 find_package(oatpp          1.4.0 REQUIRED)
@@ -96,3 +95,50 @@ target_link_libraries(crud-exe crud-lib)
 
 #enable_testing()
 #add_test(project-tests crud-test)
+
+## CPack configuration
+
+include(CPack)
+
+set(CPACK_PACKAGE_NAME "crud")
+set(CPACK_PACKAGE_VENDOR "Your Company")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A simple CRUD application")
+set(CPACK_PACKAGE_VERSION "1.0.0")
+set(CPACK_PACKAGE_VERSION_MAJOR "1")
+set(CPACK_PACKAGE_VERSION_MINOR "0")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+  set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+endif()
+
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+  set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+endif()
+
+if(UNIX)
+    set(CPACK_GENERATOR "TGZ")
+elseif(WIN32)
+    set(CPACK_GENERATOR "ZIP")
+endif()
+
+# Optional: Additional settings for RPM or DEB packages
+#set(CPACK_RPM_PACKAGE_REQUIRES "oatpp")
+#set(CPACK_DEBIAN_PACKAGE_DEPENDS "oatpp")
+
+# Add additional package contents (e.g., config files, documentation)
+install(TARGETS crud-exe DESTINATION bin)
+install(DIRECTORY src/ DESTINATION include/crud FILES_MATCHING PATTERN "*.hpp")
+
+# Finalize CPack
+include(CPack)
+
+# Set CPack variables
+set(CPACK_PACKAGE_NAME "YourProjectName")
+set(CPACK_PACKAGE_VERSION "1.0.0")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Your Project Description")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
+
+include(CPack)
+
