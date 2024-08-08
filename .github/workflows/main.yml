@@ -3,22 +3,39 @@ on:
   push:
     branches:
       - main
-permissions:
-  contents: write
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Install oatpp
-        run: sudo bash ${{ github.workspace }}/utility/install-oatpp-modules.sh
-        working-directory: ${{github.workspace}}/
       - uses: actions/checkout@v4
+      
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
       
+      - name: Install oatpp
+        run: sudo bash ${{ github.workspace }}/utility/install-oatpp-modules.sh
+        working-directory: ${{ github.workspace }}
+      
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ..
+          make
+      
+      - name: Setup Node (second time)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
