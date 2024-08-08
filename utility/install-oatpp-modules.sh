@@ -55,7 +55,7 @@ install_module $BUILD_TYPE oatpp-sqlite
 cd ../
 rm -rf tmp
 
-#mkdir build && cd build
-cmake .
+mkdir build && cd build
+cmake ..
 make 
-#./crud-exe
+./crud-exe
