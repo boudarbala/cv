@@ -1,0 +1,24 @@
+name: Publish to GH Pages
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install oatpp
+        run: sudo bash ${{ github.workspace }}/utility/install-oatpp-modules.sh
+        working-directory: ${{github.workspace}}/
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          folder: dist
