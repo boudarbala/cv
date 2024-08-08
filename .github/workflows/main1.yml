@@ -1,0 +1,42 @@
+name: Publish to GH Pages
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      
+      - name: Install oatpp
+        run: sudo bash ${{ github.workspace }}/utility/install-oatpp-modules.sh
+        working-directory: ${{ github.workspace }}
+      
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ${{ github.workspace }}
+      
+      - name: Build Project
+        run: npm run build
+        working-directory: ${{ github.workspace }}
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: build
+          token: ${{ secrets.GITHUB_TOKEN }}
+          clean: true
