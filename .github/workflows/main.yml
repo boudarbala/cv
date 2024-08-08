@@ -23,12 +23,7 @@ jobs:
         run: sudo bash ${{ github.workspace }}/utility/install-oatpp-modules.sh
         working-directory: ${{ github.workspace }}
       
-      - name: Build project
-        run: |
-          mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ..
-          make
+      
       
       - name: Setup Node (second time)
         uses: actions/setup-node@v3
