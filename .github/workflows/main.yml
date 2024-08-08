@@ -1,0 +1,36 @@
+name: CI Workflow
+
+on: [push, pull_request]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'  # specify the Node.js version you need
+
+
+    - name: Install lighttpd
+      run: sudo apt-get update && sudo apt-get install -y lighttpd
+
+    - name: Configure lighttpd
+      run: |
+        echo 'server.document-root = "$(pwd)/static"' | sudo tee /etc/lighttpd/lighttpd.conf
+        echo 'server.port = 8080' | sudo tee -a /etc/lighttpd/lighttpd.conf
+        echo 'dir-listing.activate = "enable"' | sudo tee -a /etc/lighttpd/lighttpd.conf
+        echo 'mimetype.assign = ( ".html" => "text/html", ".css" => "text/css", ".js" => "application/javascript" )' | sudo tee -a /etc/lighttpd/lighttpd.conf
+
+    - name: Start lighttpd
+      run: sudo service lighttpd start
+
+    - name: Test the deployment
+      run: curl -I http://localhost:8080
+
+    - name: Stop lighttpd
+      run: sudo service lighttpd stop

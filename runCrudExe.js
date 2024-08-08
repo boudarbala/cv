@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 
 // Path to the built C++ executable
-const executablePath = './build/crud-exe';
+const executablePath = './crud-exe';
 
 
 // Run the executable
